@@ -45,6 +45,11 @@ def setup_driver():
     options = webdriver.ChromeOptions()
     options.add_argument('--ignore-certificate-errors')
     options.add_argument('--ignore-ssl-errors')
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--window-size=1920,1080')
     try:
         driver = webdriver.Chrome(options=options)
         driver.implicitly_wait(5)
@@ -67,7 +72,7 @@ def login(driver):
             logger.info('Accepted policy')
         except TimeoutException:
             logger.debug('Policy label not found')
-        driver.execute_script("document.getElementById('policy_confirmed').checked = true;")
+        #driver.execute_script("document.getElementById('policy_confirmed').checked = true;")
 
         # Enter credentials
         email = WebDriverWait(driver, 10).until(
@@ -125,7 +130,7 @@ def navigate_to_appointment_page(driver):
 def find_first_available_date(driver):
     try:
         logger.info('Appointment URL: %s', driver.current_url)
-        driver.save_screenshot('before_datepicker.png')
+        #driver.save_screenshot('before_datepicker.png')
 
         # Open datepicker
         date_picker = WebDriverWait(driver, 20).until(
